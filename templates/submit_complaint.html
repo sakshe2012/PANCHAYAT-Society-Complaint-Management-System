@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h2>Submit New Complaint</h2>
+    <a href="{{ url_for('user_dashboard') }}" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+</div>
+
+<div class="form-container" style="max-width: 600px;">
+    <div class="mic-btn-container">
+        <button type="button" id="mic-btn" class="mic-btn" title="Click to start recording">
+            <i class="fas fa-microphone"></i>
+        </button>
+    </div>
+    <div id="recording-status" class="recording-status"></div>
+    
+    <form method="POST" action="{{ url_for('submit_complaint') }}" style="margin-top: 1rem;">
+        <div class="form-group">
+            <label for="title">Complaint Title</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="e.g., Broken Streetlight" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="description">Description (Auto-filled via Voice)</label>
+            <textarea id="description" name="description" class="form-control" rows="5" placeholder="Click the microphone and speak your issue, or type here..." required></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="location">Location / Block Area</label>
+            <input type="text" id="location" name="location" class="form-control" placeholder="e.g., Block A, Near Gate 2" required>
+        </div>
+        
+        <div style="background: rgba(79, 70, 229, 0.1); padding: 1rem; border-radius: 6px; border: 1px dashed var(--primary-color); margin-bottom: 1.5rem; font-size: 0.9rem;">
+            <i class="fas fa-robot" style="color: var(--primary-color);"></i> <strong>AI Note:</strong> Our system will automatically categorize your issue based on the description.
+        </div>
+        
+        <button type="submit" class="btn btn-full">Submit Complaint</button>
+    </form>
+</div>
+{% endblock %}

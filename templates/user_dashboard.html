@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h2>My Complaints</h2>
+    <a href="{{ url_for('submit_complaint') }}" class="btn"><i class="fas fa-plus"></i> New Complaint</a>
+</div>
+
+{% if complaints %}
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for complaint in complaints %}
+            <tr>
+                <td style="font-weight: 500;">{{ complaint.title }}</td>
+                <td><span class="badge badge-category">{{ complaint.category }}</span></td>
+                <td>{{ complaint.location }}</td>
+                <td>
+                    {% if complaint.status == 'Pending' %}
+                        <span class="badge badge-pending"><i class="fas fa-clock"></i> Pending</span>
+                    {% elif complaint.status == 'In Progress' %}
+                        <span class="badge badge-progress"><i class="fas fa-tools"></i> In Progress</span>
+                    {% else %}
+                        <span class="badge badge-resolved"><i class="fas fa-check-circle"></i> Resolved</span>
+                    {% endif %}
+                </td>
+                <td style="color: var(--text-muted);">{{ complaint.created_at.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div style="text-align: center; padding: 3rem; background: var(--bg-panel); border-radius: 12px; border: 1px solid var(--glass-border);">
+    <i class="fas fa-folder-open" style="font-size: 3rem; color: var(--text-muted); margin-bottom: 1rem;"></i>
+    <h3 style="color: var(--text-muted);">No complaints found</h3>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">You haven't submitted any complaints yet.</p>
+    <a href="{{ url_for('submit_complaint') }}" class="btn">Report an Issue</a>
+</div>
+{% endif %}
+{% endblock %}
